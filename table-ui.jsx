@@ -181,7 +181,7 @@ function selectedLineType(tbuttons) {
 				case 1: return 'lr'
 				case 2: return 'ud'
 				case 3: return 'rows'
-				case 4: return 'colse'
+				case 4: return 'cols'
 			}
 		}
 	}
