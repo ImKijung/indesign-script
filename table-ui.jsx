@@ -110,8 +110,8 @@ btn_apply.onClick = function() {
 function applytableBorder(bordertype, stroke_weight, strokeindex, bordercolor) {
 	var doc = app.activeDocument;
 	var tableObj = app.selection[0];
-	$.writeln(tableObj.constructor.name);
-	$.writeln(bordertype, strokeindex);
+	// $.writeln(tableObj.constructor.name);
+	// $.writeln(bordertype, strokeindex);
 	// $.writeln(bordercolor);
 	if (stroke_weight == null || stroke_weight == '0' || stroke_weight == '') {
 		strokew = 0;
