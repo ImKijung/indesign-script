@@ -1,15 +1,18 @@
 ﻿#targetengine "session";
 
-var scriptPath = 'D:/Work/kmong-script/220715-japssan/workspace/privateProject/'
+// var scriptPath = app.activeScript.path;
+var scriptPath = 'd:/work/220718/_workspace/privateProject/table_utility'
 var strokes = app.strokeStyles.everyItem().name;
 
 var w = new Window('palette', 'Table Utility');
 w.orientation = 'column';
-var all = File(scriptPath + 'all.png');
-var lr = File(scriptPath + 'lr.png');
-var ud = File(scriptPath + 'ud.png');
-var rows = File(scriptPath + 'rows.png');
-var columns = File(scriptPath + 'columns.png');
+var all = File(scriptPath + '/all.png');
+var lr = File(scriptPath + '/lr.png');
+var ud = File(scriptPath + '/ud.png');
+var rows = File(scriptPath + '/rows.png');
+var columns = File(scriptPath + '/columns.png');
+var left = File(scriptPath + '/left.png');
+var right = File(scriptPath + '/right.png');
 
 var panelbutton = w.add ('panel {text: "Selet Border"}');
 panelbutton.preferredSize = [339, 40];
@@ -24,6 +27,10 @@ var t4 = panelbutton.add('iconbutton', undefined, rows, {style: 'toolbutton', to
 t4.preferredSize = [ 32, 32 ];
 var t5 = panelbutton.add('iconbutton', undefined, columns, {style: 'toolbutton', toggle:true});
 t5.preferredSize = [ 32, 32 ];
+var t6 = panelbutton.add('iconbutton', undefined, left, {style: 'toolbutton', toggle:true});
+t6.preferredSize = [ 32, 32 ];
+var t7 = panelbutton.add('iconbutton', undefined, right, {style: 'toolbutton', toggle:true});
+t7.preferredSize = [ 32, 32 ];
 
 var panelopt = w.add ('panel {text: "Settings"}');
 panelopt.orientation = 'row';
@@ -56,38 +63,62 @@ t1.onClick = function() {
 	t3.value = false;
 	t4.value = false;
 	t5.value = false;
+	t6.value = false;
+	t7.value = false;
 	topt = true;
 }
-
 t2.onClick = function() {
 	t1.value = false;
 	t3.value = false;
 	t4.value = false;
 	t5.value = false;
+	t6.value = false;
+	t7.value = false;
 	topt = true;
 }
-
 t3.onClick = function() {
 	t1.value = false;
 	t2.value = false;
 	t4.value = false;
 	t5.value = false;
+	t6.value = false;
+	t7.value = false;
 	topt = true;
 }
-
 t4.onClick = function() {
 	t1.value = false;
 	t2.value = false;
 	t3.value = false;
 	t5.value = false;
+	t6.value = false;
+	t7.value = false;
 	topt = true;
 }
-
 t5.onClick = function() {
 	t1.value = false;
 	t2.value = false;
 	t3.value = false;
 	t4.value = false;
+	t6.value = false;
+	t7.value = false;
+	topt = true;
+}
+t6.onClick = function() {
+	t1.value = false;
+	t2.value = false;
+	t3.value = false;
+	t4.value = false;
+	t5.value = false;
+	t7.value = false;
+	topt = true;
+}
+t7.onClick = function() {
+	t1.value = false;
+	t2.value = false;
+	t3.value = false;
+	t4.value = false;
+	t5.value = false;
+	t6.value = false;
 	topt = true;
 }
 
@@ -95,11 +126,11 @@ btn_apply.onClick = function() {
 	var docs = app.documents;
 	if (docs.length == 0) {
 		alert('문서를 열고 실행하세요.');
-	} else if (app.selection[0].constructor.name == 'Table' || app.selection[0].constructor.name == 'Cell') {
-		alert('표 또는 셀을 선택하세요.');
 	} else if (topt == false) {
 		alert('Select Border에서 버튼을 클릭하세요.')
-	} else {
+	}
+	
+	if (app.selection[0].constructor.name == 'Table' || app.selection[0].constructor.name == 'Cell') {
 		strokeindex = strdrop.selection.index;
 		// $.writeln(strWeight.text);
 		var tbtype = selectedLineType(panelbutton)
@@ -231,6 +262,24 @@ function applytableBorder(bordertype, stroke_weight, strokeindex, bordercolor) {
 				Cells.rightEdgeStrokeColor = bColor;
 			}
 		}
+	} else if (bordertype == 'left') {
+		for (var j=0;j<tableObj.cells.length;j++) {
+			var Cells = tableObj.cells[j];
+			Cells.leftEdgeStrokeWeight = strokew;
+			Cells.leftEdgeStrokeType = app.strokeStyles[index].name;
+			if (bordercolor != null) {
+				Cells.leftEdgeStrokeColor = bColor;
+			}
+		}
+	} else if (bordertype == 'right') {
+		for (var j=0;j<tableObj.cells.length;j++) {
+			var Cells = tableObj.cells[j];
+			Cells.rightEdgeStrokeWeight = strokew;
+			Cells.rightEdgeStrokeType = app.strokeStyles[index].name;
+			if (bordercolor != null) {
+				Cells.rightEdgeStrokeColor = bColor;
+			}
+		}
 	}
 }
 
@@ -243,6 +292,8 @@ function selectedLineType(tbuttons) {
 				case 2: return 'ud'
 				case 3: return 'rows'
 				case 4: return 'cols'
+				case 5: return 'left'
+				case 6: return 'right'
 			}
 		}
 	}
