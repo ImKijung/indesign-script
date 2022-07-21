@@ -1,7 +1,7 @@
 ﻿#targetengine "session";
 
-// var scriptPath = app.activeScript.path;
-var scriptPath = 'd:/work/220718/_workspace/privateProject/table_utility'
+var scriptPath = app.activeScript.path;
+// var scriptPath = 'd:/work/220718/_workspace/privateProject/table_utility'
 var strokes = app.strokeStyles.everyItem().name;
 
 var w = new Window('palette', 'Table Utility');

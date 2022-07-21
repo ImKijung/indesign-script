@@ -2,7 +2,7 @@ grey2img();
 
 function grey2img() {
 	var doc = app.activeDocument;
-	var docPath = doc.filePath;
+	// var docPath = doc.filePath;
 	var imgCount = doc.allGraphics.length;
 	var graphics, linkName, convertName
 	
