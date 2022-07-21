@@ -1,59 +1,69 @@
 ﻿#targetengine "session";
 
-var scriptPath = app.activeScript.path;
-// var scriptPath = 'd:/work/220718/_workspace/privateProject/table_utility'
-var strokes = app.strokeStyles.everyItem().name;
+// var scriptPath = app.activeScript.path;
+var scriptPath = 'd:/work/220718/_workspace/privateProject/table_utility'
+
+if (app.documents.length == 0) {
+	alert('문서를 열어 놓은 후 실행하세요.');
+	exit();
+}
+var doc = app.activeDocument;
+var table_color = {
+	name: 'table-color',
+	colorValue : [20, 0, 0, 60],
+	space: ColorSpace.CMYK
+}
+var tableColor = doc.colors.itemByName(table_color.name);
+if (!tableColor.isValid) {
+	doc.colors.add(table_color);
+}
 
 var w = new Window('palette', 'Table Utility');
-w.orientation = 'column';
+w.orientation = 'row';
 var all = File(scriptPath + '/all.png');
 var lr = File(scriptPath + '/lr.png');
 var ud = File(scriptPath + '/ud.png');
-var rows = File(scriptPath + '/rows.png');
-var columns = File(scriptPath + '/columns.png');
-var left = File(scriptPath + '/left.png');
-var right = File(scriptPath + '/right.png');
+// var rows = File(scriptPath + '/rows.png');
+// var columns = File(scriptPath + '/columns.png');
+// var left = File(scriptPath + '/left.png');
+// var right = File(scriptPath + '/right.png');
 
 var panelbutton = w.add ('panel {text: "Selet Border"}');
-panelbutton.preferredSize = [339, 40];
-panelbutton.orientation = 'row';
+panelbutton.preferredSize = [100, 160];
+panelbutton.orientation = 'column';
 var t1 = panelbutton.add('iconbutton', undefined, all, {style: 'toolbutton', toggle:true});
 t1.preferredSize = [ 32, 32 ];
 var t2 = panelbutton.add('iconbutton', undefined, lr, {style: 'toolbutton', toggle:true});
 t2.preferredSize = [ 32, 32 ];
 var t3 = panelbutton.add('iconbutton', undefined, ud, {style: 'toolbutton', toggle:true});
 t3.preferredSize = [ 32, 32 ];
-var t4 = panelbutton.add('iconbutton', undefined, rows, {style: 'toolbutton', toggle:true});
-t4.preferredSize = [ 32, 32 ];
-var t5 = panelbutton.add('iconbutton', undefined, columns, {style: 'toolbutton', toggle:true});
-t5.preferredSize = [ 32, 32 ];
-var t6 = panelbutton.add('iconbutton', undefined, left, {style: 'toolbutton', toggle:true});
-t6.preferredSize = [ 32, 32 ];
-var t7 = panelbutton.add('iconbutton', undefined, right, {style: 'toolbutton', toggle:true});
-t7.preferredSize = [ 32, 32 ];
+// var t4 = panelbutton.add('iconbutton', undefined, rows, {style: 'toolbutton', toggle:true});
+// t4.preferredSize = [ 32, 32 ];
+// var t5 = panelbutton.add('iconbutton', undefined, columns, {style: 'toolbutton', toggle:true});
+// t5.preferredSize = [ 32, 32 ];
+// var t6 = panelbutton.add('iconbutton', undefined, left, {style: 'toolbutton', toggle:true});
+// t6.preferredSize = [ 32, 32 ];
+// var t7 = panelbutton.add('iconbutton', undefined, right, {style: 'toolbutton', toggle:true});
+// t7.preferredSize = [ 32, 32 ];
 
 var panelopt = w.add ('panel {text: "Settings"}');
-panelopt.orientation = 'row';
-panelopt.preferredSize = [339, 40];
-var opt1 = panelopt.add('statictext', undefined, '선굵기: ');
-var strWeight = panelopt.add ('edittext {preferredSize: [30, 20], active: true, text: "0"}');
-var opt2 = panelopt.add('statictext', undefined, '선유형: ');
-var strdrop = panelopt.add('dropdownlist', [0, 0, 50, 20]);
-// strdrop.add('item', strokes);
-for (var i=0;i<strokes.length;i++) {
-	strdrop.add('item', strokes[i]);
-}
-strdrop.selection = 17;
-var opt3 = panelopt.add('statictext', undefined, '선색상: ');
-var myColor = panelopt.add('dropdownlist', [0, 0, 50, 20]);
-var swats = app.swatches
-for (var i=0;i<swats.length;i++) {
-	myColor.add('item', swats[i].name);
-}
-// var panelrun = w.add('panel');
-// panelrun.orientation = 'row';
-// panelrun.preferredSize = [339, 30]
-var btn_apply = w.add('button', [0, 0, 140, 20], '적용하기');
+panelopt.orientation = 'column';
+panelopt.preferredSize = [175, 160];
+var g1 = panelopt.add('group {orientation: "row", alignChildren: "left"}')
+var opt1 = g1.add('statictext', undefined, '선굵기: ');
+var strWeight = g1.add ('edittext {preferredSize: [90, 20], active: true, text: "0"}');
+
+var g2 = panelopt.add('group {orientation: "row", alignChildren: "left"}')
+var opt2 = g2.add('statictext', undefined, '선유형: ');
+var strdrop = g2.add('dropdownlist', [0, 0, 90, 20], ['실선', '일본식 점선', '파선 3:2']);
+strdrop.selection = 0;
+
+// var g3 = panelopt.add('group {orientation: "row", alignChildren: "left"}')
+// var opt3 = g3.add('statictext', undefined, '선색상: ');
+// var myColor = g3.add('dropdownlist', [0, 0, 90, 20], ['table-color', 'None']);
+// myColor.selection = 0;
+var chkbox = panelopt.add('checkbox', undefined, '문서 내 모든 테이블 설정');
+var btn_apply = panelopt.add('button', undefined, '적용하기');
 var topt = false
 
 w.show();
@@ -61,64 +71,16 @@ w.show();
 t1.onClick = function() {
 	t2.value = false;
 	t3.value = false;
-	t4.value = false;
-	t5.value = false;
-	t6.value = false;
-	t7.value = false;
 	topt = true;
 }
 t2.onClick = function() {
 	t1.value = false;
 	t3.value = false;
-	t4.value = false;
-	t5.value = false;
-	t6.value = false;
-	t7.value = false;
 	topt = true;
 }
 t3.onClick = function() {
 	t1.value = false;
 	t2.value = false;
-	t4.value = false;
-	t5.value = false;
-	t6.value = false;
-	t7.value = false;
-	topt = true;
-}
-t4.onClick = function() {
-	t1.value = false;
-	t2.value = false;
-	t3.value = false;
-	t5.value = false;
-	t6.value = false;
-	t7.value = false;
-	topt = true;
-}
-t5.onClick = function() {
-	t1.value = false;
-	t2.value = false;
-	t3.value = false;
-	t4.value = false;
-	t6.value = false;
-	t7.value = false;
-	topt = true;
-}
-t6.onClick = function() {
-	t1.value = false;
-	t2.value = false;
-	t3.value = false;
-	t4.value = false;
-	t5.value = false;
-	t7.value = false;
-	topt = true;
-}
-t7.onClick = function() {
-	t1.value = false;
-	t2.value = false;
-	t3.value = false;
-	t4.value = false;
-	t5.value = false;
-	t6.value = false;
 	topt = true;
 }
 
@@ -131,27 +93,72 @@ btn_apply.onClick = function() {
 	}
 	
 	if (app.selection[0].constructor.name == 'Table' || app.selection[0].constructor.name == 'Cell') {
-		strokeindex = strdrop.selection.index;
-		// $.writeln(strWeight.text);
+		strokeName = strdrop.selection.text;
 		var tbtype = selectedLineType(panelbutton)
-		applytableBorder(tbtype, strWeight.text, strokeindex, myColor.selection.text);
+		applytableBorder(tbtype, strWeight.text, strokeName);
+	} else {
+		if (chkbox.value == true) {
+			strokeName = strdrop.selection.text;
+			var tbtype = selectedLineType(panelbutton)
+			applyalltables(tbtype, strWeight.text, strokeName);
+		}
 	}
 }
 
-function applytableBorder(bordertype, stroke_weight, strokeindex, bordercolor) {
+function applyalltables(bordertype, stroke_weight, strokeName) {
 	var doc = app.activeDocument;
-	var tableObj = app.selection[0];
-	// $.writeln(tableObj.constructor.name);
-	// $.writeln(bordertype, strokeindex);
-	// $.writeln(bordercolor);
+	var myTables = doc.stories.everyItem().tables.everyItem().getElements();
 	if (stroke_weight == null || stroke_weight == '0' || stroke_weight == '') {
 		strokew = 0;
 	} else {
 		strokew = stroke_weight;
 	}
-	var index = Number(strokeindex)
-	var bColor = doc.swatches.itemByName(bordercolor);
-	// $.writeln(strokew, bordercolor);
+	for (var i=0;i<myTables.length;i++) {
+		var tableObj = myTables[i];
+		if (bordertype == 'all') {
+			tableObj.topBorderStrokeWeight = strokew;
+			tableObj.leftBorderStrokeWeight = strokew;
+			tableObj.bottomBorderStrokeWeight = strokew;
+			tableObj.rightBorderStrokeWeight = strokew;
+			tableObj.topBorderStrokeType = strokeName;
+			tableObj.leftBorderStrokeType = strokeName;
+			tableObj.bottomBorderStrokeType = strokeName;
+			tableObj.rightBorderStrokeType = strokeName;
+			tableObj.topBorderStrokeColor = bColor;
+			tableObj.leftBorderStrokeColor = bColor;
+			tableObj.bottomBorderStrokeColor = bColor;
+			tableObj.rightBorderStrokeColor = bColor;
+		} else if (bordertype == 'lr') {
+			tableObj.leftBorderStrokeWeight = strokew;
+			tableObj.rightBorderStrokeWeight = strokew;
+			tableObj.leftBorderStrokeType = strokeName;
+			tableObj.rightBorderStrokeType = strokeName;
+			tableObj.leftBorderStrokeColor = bColor;
+			tableObj.rightBorderStrokeColor = bColor;
+		} else if (bordertype == 'ud') {
+			tableObj.topBorderStrokeWeight = strokew;
+			tableObj.bottomBorderStrokeWeight = strokew;
+			tableObj.topBorderStrokeType = strokeName;
+			tableObj.bottomBorderStrokeType = strokeName;
+			tableObj.topBorderStrokeColor = bColor;
+			tableObj.bottomBorderStrokeColor = bColor;
+		}
+	}
+}
+
+function applytableBorder(bordertype, stroke_weight, strokeName) {
+	var doc = app.activeDocument;
+	var tableObj = app.selection[0];
+	// $.writeln(tableObj.constructor.name);
+	// $.writeln(bordertype, strokeindex);
+	// $.writeln(strokeName);
+	if (stroke_weight == null || stroke_weight == '0' || stroke_weight == '') {
+		strokew = 0;
+	} else {
+		strokew = stroke_weight;
+	}
+	var bColor = doc.swatches.itemByName('table-color');
+
 	if (bordertype == 'all') {
 		if (tableObj.constructor.name == 'Table') {
 			// stroke weight
@@ -159,126 +166,60 @@ function applytableBorder(bordertype, stroke_weight, strokeindex, bordercolor) {
 			tableObj.leftBorderStrokeWeight = strokew;
 			tableObj.bottomBorderStrokeWeight = strokew;
 			tableObj.rightBorderStrokeWeight = strokew;
-			
 			// stroke type
-			tableObj.topBorderStrokeType = app.strokeStyles[index].name;
-			tableObj.leftBorderStrokeType = app.strokeStyles[index].name;
-			tableObj.bottomBorderStrokeType = app.strokeStyles[index].name;
-			tableObj.rightBorderStrokeType = app.strokeStyles[index].name;
-	
-			if (bordercolor != null) {
-				tableObj.topBorderStrokeColor = bColor;
-				tableObj.leftBorderStrokeColor = bColor;
-				tableObj.bottomBorderStrokeColor = bColor;
-				tableObj.rightBorderStrokeColor = bColor;
-			}
+			tableObj.topBorderStrokeType = strokeName;
+			tableObj.leftBorderStrokeType = strokeName;
+			tableObj.bottomBorderStrokeType = strokeName;
+			tableObj.rightBorderStrokeType = strokeName;
+			tableObj.topBorderStrokeColor = bColor;
+			tableObj.leftBorderStrokeColor = bColor;
+			tableObj.bottomBorderStrokeColor = bColor;
+			tableObj.rightBorderStrokeColor = bColor;
 		} else if (tableObj.constructor.name == 'Cell') {
-			for (var i=0;i<tableObj.cells.length;i++) {
-				var Cells = tableObj.cells[i];
-				// stroke weight
-				Cells.topEdgeStrokeWeight = strokew;
-				Cells.leftEdgeStrokeWeight = strokew;
-				Cells.bottomEdgeStrokeWeight = strokew;
-				Cells.rightEdgeStrokeWeight = strokew;
-
-				Cells.topEdgeStrokeType = app.strokeStyles[index].name;
-				Cells.leftEdgeStrokeType = app.strokeStyles[index].name;
-				Cells.bottomEdgeStrokeType = app.strokeStyles[index].name;
-				Cells.rightEdgeStrokeType = app.strokeStyles[index].name;
-				
-				if (bordercolor != null) {
-					Cells.topEdgeStrokeColor = bColor;
-					Cells.leftEdgeStrokeColor = bColor;
-					Cells.bottomEdgeStrokeColor = bColor;
-					Cells.rightEdgeStrokeColor = bColor;
-				}
-			}
+			tableObj.parent.topBorderStrokeWeight = strokew;
+			tableObj.parent.leftBorderStrokeWeight = strokew;
+			tableObj.parent.bottomBorderStrokeWeight = strokew;
+			tableObj.parent.rightBorderStrokeWeight = strokew;
+			tableObj.parent.topBorderStrokeType = strokeName;
+			tableObj.parent.leftBorderStrokeType = strokeName;
+			tableObj.parent.bottomBorderStrokeType = strokeName;
+			tableObj.parent.rightBorderStrokeType = strokeName;
+			tableObj.parent.topBorderStrokeColor = bColor;
+			tableObj.parent.leftBorderStrokeColor = bColor;
+			tableObj.parent.bottomBorderStrokeColor = bColor;
+			tableObj.parent.rightBorderStrokeColor = bColor;
 		}
 	} else if (bordertype == 'lr') {
 		if (tableObj.constructor.name == 'Table') {
 			tableObj.leftBorderStrokeWeight = strokew;
 			tableObj.rightBorderStrokeWeight = strokew;
-	
-			tableObj.leftBorderStrokeType = app.strokeStyles[index].name;
-			tableObj.rightBorderStrokeType = app.strokeStyles[index].name;
-			
-			if (bordercolor != null) {
-				tableObj.leftBorderStrokeColor = bColor;
-				tableObj.rightBorderStrokeColor = bColor;
-			}
+			tableObj.leftBorderStrokeType = strokeName;
+			tableObj.rightBorderStrokeType = strokeName;
+			tableObj.leftBorderStrokeColor = bColor;
+			tableObj.rightBorderStrokeColor = bColor;
 		} else if (tableObj.constructor.name == 'Cell') {
-			for (var i=0;i<tableObj.cells.length;i++) {
-				var Cells = tableObj.cells[i];
-				Cells.leftEdgeStrokeWeight = strokew;
-				Cells.rightEdgeStrokeWeight = strokew;
-				Cells.leftEdgeStrokeType = app.strokeStyles[index].name;
-				Cells.rightEdgeStrokeType = app.strokeStyles[index].name;
-				if (bordercolor != null) {
-					Cells.leftEdgeStrokeColor = bColor;
-					Cells.rightEdgeStrokeColor = bColor;
-				}
-			}
+			tableObj.parent.leftBorderStrokeWeight = strokew;
+			tableObj.parent.rightBorderStrokeWeight = strokew;
+			tableObj.parent.leftBorderStrokeType = strokeName;
+			tableObj.parent.rightBorderStrokeType = strokeName;
+			tableObj.parent.leftBorderStrokeColor = bColor;
+			tableObj.parent.bottomBorderStrokeColor = bColor;
 		}
 	} else if (bordertype == 'ud') {
 		if (tableObj.constructor.name == 'Table') {
 			tableObj.topBorderStrokeWeight = strokew;
 			tableObj.bottomBorderStrokeWeight = strokew;
-	
-			tableObj.topBorderStrokeType = app.strokeStyles[index].name;
-			tableObj.bottomBorderStrokeType = app.strokeStyles[index].name;
-	
-			if (bordercolor != null) {
-				tableObj.topBorderStrokeColor = bColor;
-				tableObj.bottomBorderStrokeColor = bColor;
-			}
+			tableObj.topBorderStrokeType = strokeName;
+			tableObj.bottomBorderStrokeType = strokeName;
+			tableObj.topBorderStrokeColor = bColor;
+			tableObj.bottomBorderStrokeColor = bColor;
 		} else if (tableObj.constructor.name == 'Cell') {
-			for (var i=0;i<tableObj.cells.length;i++) {
-				var Cells = tableObj.cells[i];
-				Cells.topEdgeStrokeWeight = strokew;
-				Cells.bottomEdgeStrokeWeight = strokew;
-				Cells.topEdgeStrokeType = app.strokeStyles[index].name;
-				Cells.bottomEdgeStrokeType = app.strokeStyles[index].name;
-				if (bordercolor != null) {
-					Cells.topEdgeStrokeColor = bColor;
-					Cells.bottomEdgeStrokeColor = bColor;
-				}
-			}
-		}
-	} else if (bordertype == 'rows') {
-		for (var j=0;j<tableObj.cells.length;j++) {
-			var Cells = tableObj.cells[j];
-			Cells.bottomEdgeStrokeWeight = strokew;
-			Cells.bottomEdgeStrokeType = app.strokeStyles[index].name;
-			if (bordercolor != null) {
-				Cells.bottomEdgeStrokeColor = bColor;
-			}
-		}
-	} else if (bordertype == 'cols') {
-		for (var j=0;j<tableObj.cells.length;j++) {
-			var Cells = tableObj.cells[j];
-			Cells.rightEdgeStrokeWeight = strokew;
-			Cells.rightEdgeStrokeType = app.strokeStyles[index].name;
-			if (bordercolor != null) {
-				Cells.rightEdgeStrokeColor = bColor;
-			}
-		}
-	} else if (bordertype == 'left') {
-		for (var j=0;j<tableObj.cells.length;j++) {
-			var Cells = tableObj.cells[j];
-			Cells.leftEdgeStrokeWeight = strokew;
-			Cells.leftEdgeStrokeType = app.strokeStyles[index].name;
-			if (bordercolor != null) {
-				Cells.leftEdgeStrokeColor = bColor;
-			}
-		}
-	} else if (bordertype == 'right') {
-		for (var j=0;j<tableObj.cells.length;j++) {
-			var Cells = tableObj.cells[j];
-			Cells.rightEdgeStrokeWeight = strokew;
-			Cells.rightEdgeStrokeType = app.strokeStyles[index].name;
-			if (bordercolor != null) {
-				Cells.rightEdgeStrokeColor = bColor;
-			}
+			tableObj.parent.topBorderStrokeWeight = strokew;
+			tableObj.parent.bottomBorderStrokeWeight = strokew;
+			tableObj.parent.topBorderStrokeType = strokeName;
+			tableObj.parent.bottomBorderStrokeType = strokeName;
+			tableObj.parent.topBorderStrokeColor = bColor;
+			tableObj.parent.bottomBorderStrokeColor = bColor;
 		}
 	}
 }
@@ -290,10 +231,10 @@ function selectedLineType(tbuttons) {
 				case 0: return 'all'
 				case 1: return 'lr'
 				case 2: return 'ud'
-				case 3: return 'rows'
-				case 4: return 'cols'
-				case 5: return 'left'
-				case 6: return 'right'
+				// case 3: return 'rows'
+				// case 4: return 'cols'
+				// case 5: return 'left'
+				// case 6: return 'right'
 			}
 		}
 	}
