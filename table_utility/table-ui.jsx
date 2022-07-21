@@ -1,7 +1,7 @@
 ﻿#targetengine "session";
 
-// var scriptPath = app.activeScript.path;
-var scriptPath = 'd:/work/220718/_workspace/privateProject/table_utility'
+var scriptPath = app.activeScript.path;
+// var scriptPath = 'd:/work/220718/_workspace/privateProject/table_utility'
 
 if (app.documents.length == 0) {
 	alert('문서를 열어 놓은 후 실행하세요.');
