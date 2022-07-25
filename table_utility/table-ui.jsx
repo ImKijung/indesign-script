@@ -114,16 +114,14 @@ btn_apply.onClick = function() {
 		alert('Select Border에서 버튼을 클릭하세요.')
 	}
 	
-	if ((app.selection[0].constructor.name == 'Table' || app.selection[0].constructor.name == 'Cell') && (chkbox.value == false)) {
+	if (chkbox.value == false) {
 		strokeName = strdrop.selection.text;
 		var tbtype = selectedLineType(panelbutton)
 		applytableBorder(tbtype, strWeight.text, strokeName, sColor.selection.text);
 	} else {
-		if (chkbox.value == true) {
-			strokeName = strdrop.selection.text;
-			var tbtype = selectedLineType(panelbutton)
-			applyalltables(tbtype, strWeight.text, strokeName, sColor.selection.text);
-		}
+		strokeName = strdrop.selection.text;
+		var tbtype = selectedLineType(panelbutton)
+		applyalltables(tbtype, strWeight.text, strokeName, sColor.selection.text);
 	}
 }
 
@@ -155,20 +153,56 @@ function applyalltables(bordertype, stroke_weight, strokeName, colorName) {
 					tableObj.bottomBorderStrokeColor = bColor;
 					tableObj.rightBorderStrokeColor = bColor;
 					if (bordertype == 'every') {
-						for (var n=0; n<tableObj.cells.length; n++) {
-							var nCells = tableObj.cells[n];
-							nCells.topEdgeStrokeWeight = strokew;
-							nCells.leftEdgeStrokeWeight = strokew;
-							nCells.bottomEdgeStrokeWeight = strokew;
-							nCells.rightEdgeStrokeWeight = strokew;
-							nCells.topEdgeStrokeType = strokeName;
-							nCells.leftEdgeStrokeType = strokeName;
-							nCells.bottomEdgeStrokeType = strokeName;
-							nCells.rightEdgeStrokeType = strokeName;
-							nCells.topEdgeStrokeColor = bColor;
-							nCells.leftEdgeStrokeColor = bColor;
-							nCells.bottomEdgeStrokeColor = bColor;
-							nCells.rightEdgeStrokeColor = bColor;
+						var sRow, nCells, lLastCols;
+						var lLastRow = tableObj.rows.length;
+						for (var l=0;l<lLastRow;l++) {
+							sRow = tableObj.rows[l];
+							if (l == 0) {
+								// 첫번째 rows
+								lLastCols = sRow.cells.length;
+								for (var x=0;x<sRow.cells.length;x++) {
+									nCells = sRow.cells[x];
+									if (x == 0) {
+										// 첫번째 Cols
+										rightbottomBorder(nCells, strokew, strokeName, bColor);
+									} else if (x == lLastCols - 1) {
+										// 마지막 Cols
+										leftbottomBorder(nCells, strokew, strokeName, bColor);
+									} else {
+										// 중간 cols
+										leftbottomrightBorder(nCells, strokew, strokeName, bColor);
+									}
+								}
+							} else if (l == lLastRow - 1) {
+								// 마지막 rows
+								lLastCols = sRow.cells.length;
+								for (var x=0;x<sRow.cells.length;x++) {
+									nCells = sRow.cells[x];
+									if (x == 0) {
+										// 첫번째 Cols
+										righttopBorder(nCells, strokew, strokeName, bColor);
+									} else if (x == lLastCols - 1) {
+										// 마지막 Cols
+										lefttopBorder(nCells, strokew, strokeName, bColor);
+									} else {
+										// 중간 cols
+										topleftrightBorder(nCells, strokew, strokeName, bColor);
+									}
+								}
+							} else {
+								// 중간 rows
+								lLastCols = sRow.cells.length;
+								for (var x=0;x<sRow.cells.length;x++) {
+									nCells = sRow.cells[x];
+									if (x == 0) {
+										topbottomrightBorder(nCells, strokew, strokeName, bColor);
+									} else if (x == lLastCols - 1) {
+										topleftbottomBorder(nCells, strokew, strokeName, bColor);
+									} else {
+										allaroundBorder(nCells, strokew, strokeName, bColor);
+									}
+								}
+							}
 						}
 					}
 				} else if (bordertype == 'lr') {
@@ -223,23 +257,60 @@ function applytableBorder(bordertype, stroke_weight, strokeName, colorName) {
 				tableObj.bottomBorderStrokeColor = bColor;
 				tableObj.rightBorderStrokeColor = bColor;
 				if (bordertype == 'every') {
-					for (var n=0; n<tableObj.cells.length; n++) {
-						var nCells = tableObj.cells[n];
-						nCells.topEdgeStrokeWeight = strokew;
-						nCells.leftEdgeStrokeWeight = strokew;
-						nCells.bottomEdgeStrokeWeight = strokew;
-						nCells.rightEdgeStrokeWeight = strokew;
-						nCells.topEdgeStrokeType = strokeName;
-						nCells.leftEdgeStrokeType = strokeName;
-						nCells.bottomEdgeStrokeType = strokeName;
-						nCells.rightEdgeStrokeType = strokeName;
-						nCells.topEdgeStrokeColor = bColor;
-						nCells.leftEdgeStrokeColor = bColor;
-						nCells.bottomEdgeStrokeColor = bColor;
-						nCells.rightEdgeStrokeColor = bColor;
+					var sRow, nCells, lLastCols;
+					var lLastRow = tableObj.rows.length;
+					for (var i=0;i<lLastRow;i++) {
+						sRow = tableObj.rows[i];
+						if (i == 0) {
+							// 첫번째 rows
+							lLastCols = sRow.cells.length;
+							for (var j=0;j<sRow.cells.length;j++) {
+								nCells = sRow.cells[j];
+								if (j == 0) {
+									// 첫번째 Cols
+									rightbottomBorder(nCells, strokew, strokeName, bColor);
+								} else if (j == lLastCols - 1) {
+									// 마지막 Cols
+									leftbottomBorder(nCells, strokew, strokeName, bColor);
+								} else {
+									// 중간 cols
+									leftbottomrightBorder(nCells, strokew, strokeName, bColor);
+								}
+							}
+						} else if (i == lLastRow - 1) {
+							// 마지막 rows
+							lLastCols = sRow.cells.length;
+							for (var j=0;j<sRow.cells.length;j++) {
+								nCells = sRow.cells[j];
+								if (j == 0) {
+									// 첫번째 Cols
+									righttopBorder(nCells, strokew, strokeName, bColor);
+								} else if (j == lLastCols - 1) {
+									// 마지막 Cols
+									lefttopBorder(nCells, strokew, strokeName, bColor);
+								} else {
+									// 중간 cols
+									topleftrightBorder(nCells, strokew, strokeName, bColor);
+								}
+							}
+						} else {
+							// 중간 rows
+							lLastCols = sRow.cells.length;
+							for (var j=0;j<sRow.cells.length;j++) {
+								nCells = sRow.cells[j];
+								if (j == 0) {
+									topbottomrightBorder(nCells, strokew, strokeName, bColor);
+								} else if (j == lLastCols - 1) {
+									topleftbottomBorder(nCells, strokew, strokeName, bColor);
+								} else {
+									allaroundBorder(nCells, strokew, strokeName, bColor);
+								}
+							}
+						}
 					}
 				}
 			} else if (tableObj.constructor.name == 'Cell') {
+				// alert('표를 전체 선택한 다음 실행하세요.');
 				tableObj.parent.topBorderStrokeWeight = strokew;
 				tableObj.parent.leftBorderStrokeWeight = strokew;
 				tableObj.parent.bottomBorderStrokeWeight = strokew;
@@ -305,4 +376,103 @@ function selectedLineType(tbuttons) {
 			}
 		}
 	}
+}
+
+function allaroundBorder(nCells, stkWeight, stkName, stkColor) {
+	nCells.topEdgeStrokeWeight = stkWeight;
+	nCells.leftEdgeStrokeWeight = stkWeight;
+	nCells.bottomEdgeStrokeWeight = stkWeight;
+	nCells.rightEdgeStrokeWeight = stkWeight;
+	nCells.topEdgeStrokeType = stkName;
+	nCells.leftEdgeStrokeType = stkName;
+	nCells.bottomEdgeStrokeType = stkName;
+	nCells.rightEdgeStrokeType = stkName;
+	nCells.topEdgeStrokeColor = stkColor;
+	nCells.leftEdgeStrokeColor = stkColor;
+	nCells.bottomEdgeStrokeColor = stkColor;
+	nCells.rightEdgeStrokeColor = stkColor;
+}
+
+function topbottomrightBorder(nCells, stkWeight, stkName, stkColor) {
+	nCells.topEdgeStrokeWeight = stkWeight;
+	nCells.bottomEdgeStrokeWeight = stkWeight;
+	nCells.rightEdgeStrokeWeight = stkWeight;
+	nCells.topEdgeStrokeType = stkName;
+	nCells.bottomEdgeStrokeType = stkName;
+	nCells.rightEdgeStrokeType = stkName;
+	nCells.topEdgeStrokeColor = stkColor;
+	nCells.bottomEdgeStrokeColor = stkColor;
+	nCells.rightEdgeStrokeColor = stkColor;
+}
+
+function topleftbottomBorder(nCells, stkWeight, stkName, stkColor) {
+	nCells.topEdgeStrokeWeight = stkWeight;
+	nCells.bottomEdgeStrokeWeight = stkWeight;
+	nCells.leftEdgeStrokeWeight = stkWeight;
+	nCells.topEdgeStrokeType = stkName;
+	nCells.bottomEdgeStrokeType = stkName;
+	nCells.leftEdgeStrokeType = stkName;
+	nCells.topEdgeStrokeColor = stkColor;
+	nCells.bottomEdgeStrokeColor = stkColor;
+	nCells.leftEdgeStrokeColor = stkColor;
+}
+
+function rightbottomBorder(nCells, stkWeight, stkName, stkColor) {
+	nCells.bottomEdgeStrokeWeight = stkWeight;
+	nCells.rightEdgeStrokeWeight = stkWeight;
+	nCells.bottomEdgeStrokeType = stkName;
+	nCells.rightEdgeStrokeType = stkName;
+	nCells.bottomEdgeStrokeColor = stkColor;
+	nCells.rightEdgeStrokeColor = stkColor;
+}
+
+function righttopBorder(nCells, stkWeight, stkName, stkColor) {
+	nCells.topEdgeStrokeWeight = stkWeight;
+	nCells.rightEdgeStrokeWeight = stkWeight;
+	nCells.topEdgeStrokeType = stkName;
+	nCells.rightEdgeStrokeType = stkName;
+	nCells.topEdgeStrokeColor = stkColor;
+	nCells.rightEdgeStrokeColor = stkColor;
+}
+
+function leftbottomBorder(nCells, stkWeight, stkName, stkColor) {
+	nCells.leftEdgeStrokeWeight = stkWeight;
+	nCells.bottomEdgeStrokeWeight = stkWeight;
+	nCells.leftEdgeStrokeType = stkName;
+	nCells.bottomEdgeStrokeType = stkName;
+	nCells.leftEdgeStrokeColor = stkColor;
+	nCells.bottomEdgeStrokeColor = stkColor;
+}
+
+function lefttopBorder(nCells, stkWeight, stkName, stkColor) {
+	nCells.leftEdgeStrokeWeight = stkWeight;
+	nCells.topEdgeStrokeWeight = stkWeight;
+	nCells.leftEdgeStrokeType = stkName;
+	nCells.topEdgeStrokeType = stkName;
+	nCells.leftEdgeStrokeColor = stkColor;
+	nCells.topEdgeStrokeColor = stkColor;
+}
+
+function leftbottomrightBorder(nCells, stkWeight, stkName, stkColor) {
+	nCells.leftEdgeStrokeWeight = stkWeight;
+	nCells.bottomEdgeStrokeWeight = stkWeight;
+	nCells.rightEdgeStrokeWeight = stkWeight;
+	nCells.leftEdgeStrokeType = stkName;
+	nCells.bottomEdgeStrokeType = stkName;
+	nCells.rightEdgeStrokeType = stkName;
+	nCells.leftEdgeStrokeColor = stkColor;
+	nCells.bottomEdgeStrokeColor = stkColor;
+	nCells.rightEdgeStrokeColor = stkColor;
+}
+
+function topleftrightBorder(nCells, stkWeight, stkName, stkColor) {
+	nCells.topEdgeStrokeWeight = stkWeight;
+	nCells.leftEdgeStrokeWeight = stkWeight;
+	nCells.rightEdgeStrokeWeight = stkWeight;
+	nCells.topEdgeStrokeType = stkName;
+	nCells.leftEdgeStrokeType = stkName;
+	nCells.rightEdgeStrokeType = stkName;
+	nCells.topEdgeStrokeColor = stkColor;
+	nCells.leftEdgeStrokeColor = stkColor;
+	nCells.rightEdgeStrokeColor = stkColor;
 }
