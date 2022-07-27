@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>인디자인 스타일 색상 선택 인터페이스</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.3/js/bootstrap-colorpicker.min.js"></script>
+
+    <style>
+        .container-fluid {
+            max-width: 900px;
+        }
+        
+        .float-right {
+            float: right;
+            margin-right: 5px;
+        }
+        
+        .btn {
+            width: 100px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <main class="container-fluid">
+        <div class="row">
+            <div class="col-12 p-3" id="content">
+                <div class="row">
+                    <!-- Project Code-->
+                    <div class="col-12">
+                        <!-- Project Code -->
+                        <div class="card shadow">
+                            <form>
+                                <div class="card-header ">
+                                    <h4 style="display:inline-block">문자 스타일 색상 설정</h4>
+
+                                    <button class="btn btn-outline-primary btn-sm float-right" onclick="self.close(); return false;">취소</button>
+                                    <button class="btn btn-primary btn-sm float-right">저장</button>
+                                </div>
+                                <div class="card-body code-register-body">
+                                    <table class="table table-striped table-hover table-sm code_btn">
+                                        <colgroup>
+                                            <col>
+                                            <col width="30%">
+                                            <col width="10%">
+                                        </colgroup>
+                                        <tbody id="character_style_list">
+                                            <tr>
+                                                <td>문자 스타일 1번 색상</td>
+                                                <td>
+                                                    <div id="color-picker-component-0" class="input-group colorpicker-component">
+                                                        <span class="input-group-addon"><i style="width:37px; height:37px"></i></span>
+                                                        <input type="text" value="#38a677" class="form-control col-8" />
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm">삭제</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- //card-body -->
+                                <div class="card-footer bg-white p-5">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control bg-white" placeholder="신규 스타일명">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div id="color-picker-component-add" class="input-group colorpicker-component">
+                                                <span class="input-group-addon"><i style="width:37px; height:37px"></i></span>
+                                                <input type="text" value="#cccccc" class="form-control col-8" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="submit" class="btn btn-primary btn-block ssb">추가</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- card-footer -->
+                            </form>
+                        </div>
+                        <!-- //Project Code end -->
+                    </div>
+                    <!-- //Project Code & report-->
+                </div>
+            </div>
+        </div>
+        <!-- delete -->
+        <form name="deleteForm" id="deleteForm" method="post">
+            <input type="hidden" name="code">
+            <input type="hidden" name="seq">
+            <div id="modal-alert-delete" class="modal os fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            삭제하시겠습니까?
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-outline-dark btn-sm">Cancle</button>
+                            <button type="button" class="btn btn-primary btn-sm">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- //delete -->
+    </main>
+
+    <script>
+        $(function() {
+            //xml
+            $.ajax({
+                url: "./DB.xml",
+                type: "POST",
+                success: function(xml) {
+                    var characterStyles = $(xml).find('CharacterStyles').children();
+                    var style_list = "";
+                    $(characterStyles).each(function(index) {
+                        //console.log(index + ": " + $(this).attr('name') + ", " + $(this).attr('color'));
+                        style_list += "<tr>";
+                        style_list += " <td>" + $(this).attr('name') + " 색상</td>";
+                        style_list += " <td>";
+                        style_list += "   <div id='color-picker-component-" + index + "' class='input-group colorpicker-component'>";
+                        style_list += "     <span class='input-group-addon'><i style='width:37px; height:37px'></i></span>";
+                        style_list += "     <input type='text' value='" + $(this).attr('color') + "' class='form-control col-8' />";
+                        style_list += "   </div>";
+                        style_list += " </td>";
+                        style_list += " <td>";
+                        style_list += "   <button class='btn btn-danger btn-sm'>삭제</button>";
+                        style_list += " </td>";
+                        style_list += "</tr>";
+
+                        $("#character_style_list").html(style_list);
+
+                        //color picker
+                        $('.colorpicker-component').colorpicker();
+                    });
+                },
+                error: function(xhr, xmlStatus) {
+                    alert('처리중에 오류가 발생하였습니다.\n\n' + xhr.xmlStatus);
+                    return;
+                }
+            });
+
+            //delete modal
+            var codeBtn = $('.code_btn').find('button.btn-danger');
+            codeBtn.on("click", function() {
+                $('#modal-alert-delete').modal();
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>

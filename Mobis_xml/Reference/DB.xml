@@ -1,0 +1,38 @@
+<Root>
+	<Configs>
+		<Config type="image" name="checkImageStyled" value="true" />
+	</Configs>
+	<CharacterStyles>
+		<CharacterStyle type="highlight" name="C_Button" color="#FFB300" />
+		<CharacterStyle type="highlight" name="C_MMI" color="#99FF00" />
+		<CharacterStyle type="highlight" name="C_MMI_NoBold" color="#80FFFF" />
+		<CharacterStyle type="highlight" name="C_VR" color="#B300FF" />
+		<CharacterStyle type="highlight" name="C_Web_App" color="#FFB3FF" />
+		<CharacterStyle type="highlight" name="C_Web_App_NoBold" color="#FFFF80" />
+		<CharacterStyle type="TOC" name="C_Below_Heading" action="remove" />
+		<CharacterStyle type="TOC" name="C_Below_Heading_LtoR" action="remove" />
+		<CharacterStyle type="TOC" name="C_LtoR" action="setNumber" />
+		<CharacterStyle type="CharImage" name="C_Image" color="#008000" />
+		<CharacterStyle type="MMI" name="C_MMI" color="#008000" />
+		<CharacterStyle type="MMI" name="C_MMI_NoBold" color="#008000" />
+		<CharacterStyle type="MMI" name="C_MMI_KO" color="#008000" />
+		<CharacterStyle type="MMI" name="C_MMI_LtoR" color="#008000" />
+	</CharacterStyles>
+	<ParagraphStyles>
+		<ParagraphStyle type="table" name="Empty_1" useTable="true" />
+		<ParagraphStyle type="table" name="Empty_2" useTable="true" />
+		<ParagraphStyle type="table" name="Empty_3" useTable="true" />
+		<ParagraphStyle type="floatId" name="Chapter" />
+		<ParagraphStyle type="floatId" name="Heading1" />
+		<ParagraphStyle type="floatId" name="Heading2" />
+		<ParagraphStyle type="floatId" name="Heading1-Option" />
+	</ParagraphStyles>
+	<TableStyles>
+		<TableStyle type="useImageCharacterStyle" name="Table_Text" />
+		<TableStyle type="useImageCharacterStyle" name="Table_Text-UpSp" />
+		<TableStyle type="useImageCharacterStyle" name="Table_Symbol" />
+		<TableStyle type="useImageCharacterStyle" name="Table_Symbol-Vertical" />
+		<TableStyle type="useImageCharacterStyle" name="Table_OrderList" />
+		<TableStyle type="useImageCharacterStyle" name="Table_FAQ" />
+	</TableStyles>
+</Root>
