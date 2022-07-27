@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSSample</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+    $(function() {
+        var params = {
+			// Request parameters
+			// "language": "en",
+			// "contents": "The chicken was really pink. I couldn't believe my eyes!",
+			// "settings": {}
+        };
+      
+        $.ajax({
+            url: "https://api.tisane.ai/parse?" + $.param(params),
+            beforeSend: function(xhrObj){
+                // Request headers
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","{e475d0a31d03407dacad674fd91ba5a3}");
+            },
+            type: "POST",
+            // Request body
+			data: "{body}",
+        })
+        .done(function(data) {
+            alert("success");
+        })
+        .fail(function() {
+            alert("error");
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<This file uses UTF-8 encoding>
+[No Language]	0123456789 &A[ÁÀÂÄÅĀĄĂÆ]BC[ÇĆČĊ]D[ĎĐ]E[ÉÈÊËĘĒĔĖĚ]FG[ĢĜĞĠ]H[ĤĦ]I[ÍÌÎÏĪĨĬĮİ]J[ĵ]K[ķ]L[ŁĹĻĽ]MN[ÑŃŇŅŊ]O[ÓÒÔÖŌŎŐØŒ]PQR[ŔŘŖ]S[ŚŠŜŞȘß]T[ŢȚŤŦ]ÞU[ÚÙÛÜŮŪŲŨŬŰŲ]VW[Ŵ]XY[ŸÝŶ]Z[ŹŻŽ]
+Polish	0123456789 AĄBCĆDEĘFGHIJKLŁMNŃOÓPQRSŚTUÚVWXYZŹŻ
+Czech	0123456789 A[Á]BCČD[Ď]E[ÉĚ]FGH[{CH}]I[Í]JKLMN[Ň]O[Ó]PQRŘSŠT[Ť]U[ÚŮ]VWXY[Ý]ZŽ
+Danish	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ
+Norwegian: Bokmal	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ
+Norwegian: Nynorsk	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ
+Swedish	0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ
+Icelandic	0123456789 A[Á]BCDÐE[É]FGHI[Í]JKLMNO[Ó]PQRSTU[Ú]VWXY[Ý]ZÞÆÖ
+English: UK	0123456789A[ÁÀÂÄÅĀĄĂÆ]BC[ÇĆČĊ]D[ĎĐ]E[ÉÈÊËĘĒĔĖĚ]FG[ĢĜĞĠ]H[ĤĦ]I[ÍÌÎÏĪĨĬĮİ]J[ĵ]K[ķ]L[ŁĹĻĽ]MN[ÑŃŇŅŊ]O[ÓÒÔÖŌŎŐØŒ]PQR[ŔŘŖ]S[ŚŠŜŞȘß]T[ŢȚŤŦ]ÞU[ÚÙÛÜŮŪŲŨŬŰŲ]VW[Ŵ]XY[ŸÝŶ]Z[ŹŻŽ]	The An A In
+English: USA	0123456789 A{ʿA}BCDEFGHIJKLMNOPQRSTUVWXYZ	the an a 
+nl_NL_2005	0123456789 &ABCDE[ÉËÊ]FGHI[Ï]JKLMNO[ÓÖÔ]PQRSTUÜVWXYZ	de het een 't d'
+Dutch	0123456789 ABCDE[ÉË]FGHI[Ï]JKLMNO[ÓÖÔ]PQRSTU[Ü]VWXYZ	de het een 't d'
+German: Reformed	0123456789 A[Ä]BCDEFGHIJKLMNO[Ö]PQRS{SS}TU[Ü]VWXYZ	die der des dem den 
+de_DE_2006	0123456789 A[Ä]BCDEFGHIJKLMNO[Ö]PQRS{SS}TU[Ü]VWXYZ	die der des dem den 
+German: Traditional	0123456789 A[Ä]BCDEFGHIJKLMNO[Ö]PQRS{SS}TU[Ü]VWXYZ	die der des dem den 
+German: Swiss	0123456789 A[Ä]BCDEFGHIJKLMNO[Ö]PQRS{SS}TU[Ü]VWXYZ	die der des dem den 
+de_CH_2006	0123456789 A[Ä]BCDEFGHIJKLMNO[Ö]PQRS{SS}TU[Ü]VWXYZ	die der des dem den 
+French	0123456789 A[ÀÂ]BC[Ç]DE[ÉÈÊË]FGHI[ÏÎ]JKLMNO[Ô][Œ]PQRSTU[ÛÙ]VWXYZ
+French: Canadian	0123456789 A[ÀÂ]BC[Ç]DE[ÉÈÊË]FGHI[ÏÎ]JKLMNO[Ô][Œ]PQRSTU[ÛÙ]VWXYZ
+Spanish	0123456789 A[Á]BC{CH}DE[É]FGHI[Í]JKL{LL}MNÑO[Ó]PQRSTU[Ú]VWXY[Ý]Z
+Portuguese	0123456789 A[ÁÂ]BC[Ç]DE[ÉÊ]FGHI[Í]JKLMNO[ÓÔ]PQRSTU[Ú]VWXYZ
+Greek Mode	0123456789 Α[Ά]ΒΓΔΕ[Έ]ΖΗ[Ή]ΘΙ[Ί/Ϊ]ΚΛΜΝΞΟ[Ό]ΠΡΣΤ[Υ]ΎΦΧΨΩ[Ώ]ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Finnish	កខគឃងចឆជឈញដឋឌឍណតថទធនបផពភមយរលវឝឞសហឡអឣឤឥឦឧឨឩឪឫឬឭឮឯឰឱឲឳាិីឹឺុូួេែៃើឿៀោៅំះៈ់៌៍៎៏័៑្។៕៖ៗ៘៙៚ៜ៝៉៊៓៛០១២៣៤៥៦៧៨៩៰៱៲៳៴៵៶៷៸៹
+Arabic	0123456789A{AÙ}A{AÊ}A{AÂ}BCDÑEFGHIJKLMNOPQRSTUVWXYZ
+Catalan	AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ
+Croatian	A[ÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ]BCD[Đ]E[ÈẺẼÉẸÊỀỂỄẾỆ]FGHI[ÌỈĨÍỊ]JKLMNO[ÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ]PQRSTUÙỦŨÚỤƯỪỬỮỨỰ]VWXY[ỲỶỸÝỴ]Z
